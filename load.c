@@ -443,7 +443,7 @@ rb_feature_p(const char *feature, const char *ext, int rb, int expanded, const c
 	    if ((n = RSTRING_LEN(v)) < len) continue;
 	    if (strncmp(f, feature, len) != 0) {
 		if (expanded) continue;
-		if (!load_path) load_path = rb_get_expanded_load_path();
+		if (!load_path) load_path = rb_get_load_path(); /* RB: it's so slow!!! skip it. rb_get_expanded_load_path(); */
 		if (!(p = loaded_feature_path(f, n, feature, len, type, load_path)))
 		    continue;
 		expanded = 1;

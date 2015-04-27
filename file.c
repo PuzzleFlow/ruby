@@ -3565,7 +3565,8 @@ rb_file_expand_path_internal(VALUE fname, VALUE dname, int abs_mode, int long_na
 	wstr = ALLOCV_N(WCHAR, v, len);
 	MultiByteToWideChar(CP_UTF8, 0, RSTRING_PTR(tmp), -1, wstr, len);
 	if (tmp != result) rb_str_resize(tmp, 0);
-	h = FindFirstFileW(wstr, &wfd);
+	/* h = FindFirstFileW(wstr, &wfd); RB: it's not important for us to get the real system path, we supply case sensitive paths */
+	h = INVALID_HANDLE_VALUE; 
 	ALLOCV_END(v);
 	if (h != INVALID_HANDLE_VALUE) {
 	    size_t wlen;
